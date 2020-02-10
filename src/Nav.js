@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Menu, Icon} from 'antd'
+import {Link} from 'react-router-dom';
 
 function Nav() {
 
@@ -8,19 +9,23 @@ function Nav() {
     <nav >
       <Menu style={{textAlign: 'center'}} mode="horizontal" theme="dark">
 
+        
         <Menu.Item key="mail">
-          <Icon type="home" />
-          Sources
+        <Link to="/sources" >
+          <Icon type="home" />Sources
+        </Link>
         </Menu.Item>
 
         <Menu.Item key="test">
-          <Icon type="read" />
-          My Articles
+          <Link to="/my-articles" >
+            <Icon type="read" />My Articles
+          </Link>
         </Menu.Item>
 
         <Menu.Item key="app">
-          <Icon type="logout" />
-          Logout
+          <Link to="/" >
+            <Icon type="logout" />logout
+          </Link>
         </Menu.Item>
 
       </Menu>

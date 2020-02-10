@@ -3,7 +3,13 @@
 
 h4 {
   color: white;
-  font-weight: bold
+  font-weight: bold;
+}
+
+.spinnerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Login-page{
@@ -63,4 +69,22 @@ h4 {
 
 }
 
+.resultsNb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
 
+  font-weight: bold;
+}
+
+.paginationIco {
+  padding-right: 1em;
+  font-size: 2em;
+  transition: 0.1s ease-out;
+}
+
+.paginationIco:hover {
+  cursor: pointer;
+  color: #c07cff;
+}

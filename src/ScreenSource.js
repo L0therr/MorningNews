@@ -1,24 +1,22 @@
-import React,{useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { List, Avatar} from 'antd';
+import { List, Avatar } from 'antd';
+import {Link} from 'react-router-dom';
 import Nav from './Nav'
 
 function ScreenSource() {
 
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
+  const [sourceList, setSourceList] = useState([]);
+
+  useEffect(() => {
+    var fetchData = async () => {
+      var rawResponse = await fetch(`https://newsapi.org/v2/sources?&country=fr&language=fr&apiKey=29a762499850467ebfa763f8c8b6da4c`);
+      var response = await rawResponse.json();
+      console.log(response)
+      setSourceList(response.sources);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -27,24 +25,20 @@ function ScreenSource() {
        <div className="Banner"/>
 
        <div className="HomeThemes">
-          
               <List
                   itemLayout="horizontal"
-                  dataSource={data}
+                  dataSource={sourceList}
                   renderItem={item => (
                     <List.Item>
                       <List.Item.Meta
-                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={<a href="https://ant.design">{item.title}</a>}
-                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                        avatar={<Avatar src="images/general.png" />}
+                        title={<Link to={`/articles-by-source/${item.id}`} >{item.name}</Link>}
+                        description={item.description}
                       />
                     </List.Item>
                   )}
                 />
-
-
           </div>
-                 
       </div>
   );
 }
