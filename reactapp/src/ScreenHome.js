@@ -13,19 +13,23 @@ function ScreenHome() {
 
   //check if user exist
   useEffect(() => {
-    var fetchData = async () => {
-      var rawResponse = await fetch('/');
-      console.log(rawResponse)
+    async function fetchData() {
     }
     fetchData();
   }, []);
 
-  var handleSign = async (name, mail, pswd) => {
-    await fetch('/signup', {
+  var handleSign = async () => {
+    var rawResponse = await fetch('/signup', {
       method: 'POST',
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
-      body: `username=${name}&email=${mail}&pswd=${pswd}`
-});
+      body: `username=${signName}&email=${signMail}&pswd=${signPswd}`
+    });
+    var res = await rawResponse.json();
+    if (res.result === true) {
+      console.log(true);
+    } else {
+      console.log(false)
+    }
   }
 
   return (
@@ -47,23 +51,23 @@ function ScreenHome() {
 
           <div className="Sign">
 
-          <Input className="Login-input" placeholder="Username"
+          <Input required className="Login-input" placeholder="Username"
             onChange={(e) => setSignName(e.target.value)}
             value={signName}
           />
 
-          <Input className="Login-input" placeholder="Email"
+          <Input required className="Login-input" placeholder="Email"
             onChange={(e) => setSignMail(e.target.value)}
             value={signMail}
           />
 
-          <Input.Password className="Login-input" placeholder="Password"
+          <Input.Password required className="Login-input" placeholder="Password"
             onChange={(e) => setSignPswd(e.target.value)}
             value={signPswd}
           />
           
-          <Button href="" style={{width:'80px'}} type="primary"
-            onClick={() => handleSign(signName, signMail, signPswd)}
+          <Button style={{width:'80px'}} type="primary"
+            onClick={() => handleSign()}
           >Sign-up</Button>
 
           </div>
