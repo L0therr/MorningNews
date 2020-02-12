@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//REDUX
-import {connect} from 'react-redux';
 import './App.css';
 import { Card, Icon, Modal, Popover, Spin } from 'antd';
 import Nav from './Nav';
@@ -9,8 +7,9 @@ import Nav from './Nav';
 const { Meta } = Card;
 
 
-function ScreenArticlesBySource(props) {
+function Search(props) {
 
+  const [error, setError] = useState(false);
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [resultsNb, setResultsNb] = useState(0);
@@ -25,14 +24,17 @@ function ScreenArticlesBySource(props) {
   useEffect(() => {
     var fetchData = async () => {
       setIsLoading(true);
-      var rawResponse = await fetch(`https://newsapi.org/v2/everything?sources=${props.match.params.id}&sortBy=popularity&pageSize=10&apiKey=29a762499850467ebfa763f8c8b6da4c&page=${page}`);
+      var rawResponse = await fetch(`https://newsapi.org/v2/everything?language=fr&q=${props.match.params.word}&pageSize=100&sortBy=popularity&apiKey=29a762499850467ebfa763f8c8b6da4c&page=${page}`);
       var response = await rawResponse.json();
-      setNewsList(response.articles);
-      setResultsNb(response.totalResults)
-      setIsLoading(false);
+      if (response.totalResults !== 0) {
+        setNewsList(response.articles);
+        setIsLoading(false);
+      } else {
+        setError(true);
+      }
     }
     fetchData();
-  }, [page]);
+  }, [page,]);
 
 var totalResultDis = [];
   if(!newsList){
@@ -58,7 +60,7 @@ var totalResultDis = [];
               title="More Infos" trigger="click">
                  <Icon type="dash" />
               </Popover>,
-              <Icon type="like" key="ellipsis" onClick={() => {props.addToWishList(article)}} />,
+              <Icon type="like" key="ellipsis" />,
           ]}
           >
           <Meta
@@ -97,11 +99,25 @@ var handleCancel = () => {
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 
-return (
+
+if(error === true){
+
+  return (
     <div>
       <Nav/>
       <div className="Banner"/>
-      {totalResultDis}
+      <div className="resultsNb">
+        Sorry nothing was found with : {props.match.params.word}.
+      </div>
+    </div>
+  )
+
+} else {
+
+  return (
+    <div>
+      <Nav/>
+      <div className="Banner"/>
       <Spin indicator={antIcon} style={{position:"absolute"}} size="large" spinning={isLoading}>
         <div className="Card">
           {resultsDis}
@@ -119,24 +135,9 @@ return (
           >
           <p>{modal.text}</p>
         </Modal>
-
-
-      <div style={{display:'flex',justifyContent:'center', paddingTop:"3em", paddingBottom:"5em"}}>
-      {pagination}
-      </div>
     </div>
   );
 }
+}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addToWishList: function(article) {
-      dispatch( {type: 'add', articleLiked: article});
-    }
-  }
- }
-
-export default connect(
-  null, 
-  mapDispatchToProps
-)(ScreenArticlesBySource);
+export default Search;

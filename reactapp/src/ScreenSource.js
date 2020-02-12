@@ -12,7 +12,6 @@ function ScreenSource() {
     var fetchData = async () => {
       var rawResponse = await fetch(`https://newsapi.org/v2/sources?&country=fr&language=fr&apiKey=29a762499850467ebfa763f8c8b6da4c`);
       var response = await rawResponse.json();
-      console.log(response)
       setSourceList(response.sources);
     }
     fetchData();
