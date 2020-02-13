@@ -88,3 +88,14 @@ h4 {
   cursor: pointer;
   color: #c07cff;
 }
+
+.addToFav {
+  font-weight: bold;
+  color: #616161;
+  transition: 0.1s ease-out;
+}
+
+.addToFav:hover {
+  cursor: pointer;
+  color: #aaaaaa;
+}

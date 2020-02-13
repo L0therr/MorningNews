@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 //REDUX
 import {connect} from 'react-redux';
+
 import './App.css';
 import { Card, Icon, Modal, Popover, Spin } from 'antd';
 import Nav from './Nav';
@@ -36,7 +37,7 @@ function ScreenArticlesBySource(props) {
 
 var totalResultDis = [];
   if(!newsList){
-    totalResultDis.push(<div className="resultsNb">Vous avez atteins la fin...</div>)
+    totalResultDis.push(<div className="resultsNb">Vous avez atteint la fin...</div>)
   } else {
     totalResultDis.push(<div className="resultsNb">Total Results : {resultsNb} </div>)
     var resultsDis =  newsList.map((article,i) => (

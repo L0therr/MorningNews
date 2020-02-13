@@ -24,7 +24,7 @@ function Search(props) {
   useEffect(() => {
     var fetchData = async () => {
       setIsLoading(true);
-      var rawResponse = await fetch(`https://newsapi.org/v2/everything?language=fr&q=${props.match.params.word}&pageSize=100&sortBy=popularity&apiKey=29a762499850467ebfa763f8c8b6da4c&page=${page}`);
+      var rawResponse = await fetch(`https://newsapi.org/v2/everything?language=fr&qInTitle=${props.match.params.word}&pageSize=100&sortBy=popularity&apiKey=29a762499850467ebfa763f8c8b6da4c&page=${page}`);
       var response = await rawResponse.json();
       if (response.totalResults !== 0) {
         setNewsList(response.articles);
@@ -34,7 +34,7 @@ function Search(props) {
       }
     }
     fetchData();
-  }, [page,]);
+  }, [page]);
 
 var totalResultDis = [];
   if(!newsList){

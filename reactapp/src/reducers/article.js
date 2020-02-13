@@ -4,11 +4,10 @@ export default function(wishList = [], action) {
         wishListCopy.push(action.articleLiked);
         return wishListCopy;
     } else if(action.type === 'rmv') {
-        var wishListCopy = [...wishList];
-        wishListCopy.splice(action.pos, 1);
-        return wishListCopy;
+        var wishListRmv = [...wishList];
+        wishListRmv.splice(action.pos, 1);
+        return wishListRmv;
     } else {
         return wishList;
     }
-   
   }

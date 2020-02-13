@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
+//REDUX
+import {connect} from 'react-redux';
+
 import './App.css';
 import {Input,Button} from 'antd';
 import {Redirect } from 'react-router-dom';
 
-function ScreenHome() {
+function ScreenHome(props) {
 
   //siLogged
   const [isLogged, setIsLogged] = useState(false);
@@ -28,7 +31,8 @@ function ScreenHome() {
     var res = await rawResponse.json();
     if (res.result === true) {
       setSignError(res.error);
-      
+      setIsLogged(true);
+      props.addToken(res.currentUser.token)
     } else {
       setSignError(res.error);
       setSignName('');
@@ -48,6 +52,7 @@ function ScreenHome() {
     if (res.result === true) {
       setLogError(res.error);
       setIsLogged(true);
+      props.addToken(res.currentUser.token)
     } else {
       setLogError(res.error);
       setLogMail('');
@@ -69,7 +74,6 @@ function ScreenHome() {
               />
               <Input.Password className="Login-input" placeholder="Password"
               onChange={(e) => setLogPswd(e.target.value)}
-              value={logPswd}
               />
   
               <p>{logError}</p>
@@ -112,4 +116,15 @@ function ScreenHome() {
   }
 }
 
-export default ScreenHome;
+function registerToken(dispatch) {
+  return {
+    addToken: function(token) {
+      dispatch( {type: 'addToken', currentToken: token});
+    }
+  }
+ }
+
+export default connect(
+  null, 
+  registerToken
+)(ScreenHome);

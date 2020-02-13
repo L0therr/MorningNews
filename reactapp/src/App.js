@@ -12,10 +12,12 @@ import Pending from './Pending';
 
 //REDUX
 import wishList from './reducers/article';
+import currentToken from './reducers/token';
+import currentLanguage from './reducers/language';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers}  from 'redux';
 
-const store = createStore(combineReducers({wishList}));
+const store = createStore(combineReducers({wishList, currentToken, currentLanguage}));
 
 //APP
 function App() {
